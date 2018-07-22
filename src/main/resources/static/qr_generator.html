@@ -1,0 +1,75 @@
+<!--
+    Created By Hu
+ -->
+<!DOCTYPE html>
+<html lang="zh-ch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码生成</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>二维码生成</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">二维码生成</h3>
+        </div>
+        <div class="panel-body">
+            <form action="http://localhost:8080/qr/getQrCode" method="post">
+                <div class="input-group">
+                    <input name="merId" type="text" class="form-control" placeholder="商户线下档案编号"/>
+                    <span class="input-group-addon">号</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="storeCode" type="text" class="form-control" placeholder="e生活档案编号"/>
+                    <span class="input-group-addon">号</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="outTradNo" type="text" class="form-control" placeholder="商户系统订单号"/>
+                    <span class="input-group-addon">号</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="orderAmt" type="text" class="form-control" placeholder="订单总金额"/>
+                    <span class="input-group-addon">元</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="tradeDate" type="text" class="form-control" placeholder="订单生成日期"/>
+                    <span class="input-group-addon">年-月-日</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="tradeTime" type="text" class="form-control" placeholder="订单生成时间"/>
+                    <span class="input-group-addon">时-分-秒</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="payExpire" type="text" class="form-control" placeholder="二维码有效期"/>
+                    <span class="input-group-addon">秒</span>
+                </div><br>
+                <div class="input-group">
+                    <input name="tporderCreateIp" type="text" class="form-control" placeholder="订单生成的机器IP"/>
+                    <span class="input-group-addon">IP地址</span>
+                </div><br>
+                <div class="input-group">
+                    <label for="notifyFlagInput" class="col-sm-8 control-label">是否开启通知接口</label>
+                    <div class="col-sm-4">
+                        <select id="notifyFlagInput" name="notifyFlag" class="form-control">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div><hr>
+                <button type="submit" class="btn btn-block btn-primary">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.js"></script>
+</body>
+</html>
