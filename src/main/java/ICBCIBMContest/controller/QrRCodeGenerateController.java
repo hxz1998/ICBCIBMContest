@@ -2,7 +2,7 @@ package ICBCIBMContest.controller;
 
 import ICBCIBMContest.model.SimpleQrRequestParam;
 import ICBCIBMContest.services.QrGeneratorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import ICBCIBMContest.util.PropertiesFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 public class QrRCodeGenerateController {
 
     private QrGeneratorService qrGeneratorService;
+    private PropertiesFactory propertiesFactory;
+
 
     @RequestMapping("/hello")
     @ResponseBody
@@ -22,11 +24,11 @@ public class QrRCodeGenerateController {
         return "HELLO KETTY";
     }
 
-    @RequestMapping("/getQrCode")
+    @RequestMapping(value = "/getQrCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getQrCode(@ModelAttribute SimpleQrRequestParam param) {
         System.out.println(param);
-        return "http://qr.topscan.com/api.php?text=" + qrGeneratorService.getQrCode(param);
+        return propertiesFactory.getPropertyValue("QR_GENERATOR_URL") + qrGeneratorService.getQrCode(param);
     }
 
     public QrGeneratorService getQrGeneratorService() {
@@ -36,5 +38,14 @@ public class QrRCodeGenerateController {
     @Resource
     public void setQrGeneratorService(QrGeneratorService qrGeneratorService) {
         this.qrGeneratorService = qrGeneratorService;
+    }
+
+    public PropertiesFactory getPropertiesFactory() {
+        return propertiesFactory;
+    }
+
+    @Resource
+    public void setPropertiesFactory(PropertiesFactory propertiesFactory) {
+        this.propertiesFactory = propertiesFactory;
     }
 }

@@ -95,3 +95,6 @@
             </servlet-mapping>
         </web-app>
         ```
+4. 使用 `vue-resources.js` 插件无法找到方法
+    * 解决方法：在 `vue.js` 之后引入 `vue-resources.js` 
+    

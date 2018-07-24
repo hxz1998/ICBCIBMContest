@@ -2,7 +2,7 @@
     Created By Hu
  -->
 <!DOCTYPE html>
-<html lang="zh-ch" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="zh-ch" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
             <h3 class="panel-title">二维码生成</h3>
         </div>
         <div class="panel-body">
-            <form id="qr_form" action="http://localhost:8080/demo/qr/getQrCode" method="post">
+            <div id="qr_form">
                 <div class="input-group">
                     <input v-model="merId" name="merId" type="text" class="form-control" placeholder="商户线下档案编号"/>
                     <span class="input-group-addon">号</span>
@@ -30,7 +30,7 @@
                     <span class="input-group-addon">号</span>
                 </div><br>
                 <div class="input-group">
-                    <input v-model="outTradNo" name="outTradNo" type="text" class="form-control" placeholder="商户系统订单号"/>
+                    <input v-model="outTradeNo" name="outTradeNo" type="text" class="form-control" placeholder="商户系统订单号"/>
                     <span class="input-group-addon">号</span>
                 </div><br>
                 <div class="input-group">
@@ -62,36 +62,50 @@
                         </select>
                     </div>
                 </div><hr>
-                <button type="submit" class="btn btn-block btn-primary">提交</button>
-            </form>
+                <button v-on:click="post" class="btn btn-block btn-primary">提交</button>
+                <hr>
+                <img v-bind:src="imageSrc"/>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="js/vue-resource.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
 <script>
     var qr_generator = new Vue({
         el:'#qr_form',
         data:{
-                merId:'',
-                storeCode:'',
-                outTradNo:'',
-                orderAmt:'',
-                tradeDate:'',
-                tradeTime:'',
-                payExpire:'',
-                tporderCreateIp:'',
-                notifyFlagInput:''
+            merId: '',
+            storeCode: '',
+            outTradeNo: '',
+            orderAmt: '',
+            tradeDate: '',
+            tradeTime: '',
+            payExpire: '',
+            tporderCreateIp: '',
+            notifyFlagInput: '',
+            imageSrc:''
         },
         methods:{
             post:function() {
-                this.$http.post('http://localhost:8080/demo/qr/getQrCode').then(function(result) {
-                    alert(result)
-                }, function (result) {
-                    alert(result)
+                this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
+                    merId:this.merId,
+                    storeCode:this.storeCode,
+                    outTradeNo:this.outTradeNo,
+                    orderAmt:this.orderAmt,
+                    tradeDate:this.tradeDate,
+                    tradeTime:this.tradeTime,
+                    payExpire:this.payExpire,
+                    tporderCreateIp:this.tporderCreateIp,
+                    notifyFlagInput:this.notifyFlagInput
+                }).then(function(response) {
+                    this.imageSrc = response.body.result;
+                    alert(response.body.result)
+                }, function (response) {
+                    alert(response)
                 });
             }
         }
