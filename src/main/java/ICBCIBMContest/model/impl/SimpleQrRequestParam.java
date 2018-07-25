@@ -1,35 +1,26 @@
-package ICBCIBMContest.model;
+package ICBCIBMContest.model.impl;
 
-import javax.validation.constraints.Max;
+import ICBCIBMContest.model.QrRequestParam;
 
 public class SimpleQrRequestParam implements QrRequestParam {
 
     //商户线下档案编号
-    @Max(15)
     private String merId;
     //e生活档案编号
-    @Max(11)
     private String storeCode;
     //商户系统订单号
-    @Max(35)
     private String outTradeNo;
     //订单总金额，单位：分
-    @Max(17)
     private String orderAmt;
     //订单生成日期，格式yyyyMMdd
-    @Max(8)
     private String tradeDate;
     //订单生成时间，格式HHmmss
-    @Max(6)
     private String tradeTime;
     //二维码有效期，单位：秒
-    @Max(6)
     private String payExpire;
     //商户订单生成的机器IP
-    @Max(16)
     private String tporderCreateIp;
     //商户是否开启通知接口，1-是
-    @Max(1)
     private String notifyFlag;
 
     public String getMerId() {

@@ -1433,7 +1433,7 @@
     });
 
     /**
-     * Service for interacting with RESTful org.xiaozhong.services.
+     * Service for interacting with RESTful services.
      */
 
     function Resource(url, params, actions, options$$1) {

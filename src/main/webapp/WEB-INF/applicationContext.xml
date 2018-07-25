@@ -12,9 +12,4 @@
   <mvc:annotation-driven/>
   <context:annotation-config/>
 
-  <bean id="propertiesFactory" class="ICBCIBMContest.util.impl.SimplePropertiesFactory"/>
-  <bean id="qrGeneratorService" class="ICBCIBMContest.services.QrGeneratorService">
-    <property name="propertiesFactory" ref="propertiesFactory"/>
-  </bean>
-
 </beans>

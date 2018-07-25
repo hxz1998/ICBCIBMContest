@@ -2,14 +2,39 @@
     Created By Hu
  -->
 <!DOCTYPE html>
-<html lang="zh-ch" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="zh-ch" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>二维码生成</title>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/pace/pace-theme-loading-bar.css" rel="stylesheet"/>
+    <script src="js/pace.min.js"></script>
 </head>
 <body>
+
+<div id="qr-image-dialog">
+    <div class="modal fade" id="qr-image-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">呐~</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row center-block">
+                        <img class="center-block" v-bind:src="imageSrc"/>
+                        <h3 class="text-center">{{ message }}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container">
     <div class="page-header">
@@ -17,10 +42,10 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">二维码生成</h3>
+            <h2 class="panel-title">二维码生成</h2>
         </div>
         <div class="panel-body">
-            <form id="qr_form" action="http://localhost:8080/demo/qr/getQrCode" method="post">
+            <div id="qr_form">
                 <div class="input-group">
                     <input v-model="merId" name="merId" type="text" class="form-control" placeholder="商户线下档案编号"/>
                     <span class="input-group-addon">号</span>
@@ -30,7 +55,7 @@
                     <span class="input-group-addon">号</span>
                 </div><br>
                 <div class="input-group">
-                    <input v-model="outTradNo" name="outTradNo" type="text" class="form-control" placeholder="商户系统订单号"/>
+                    <input v-model="outTradeNo" name="outTradeNo" type="text" class="form-control" placeholder="商户系统订单号"/>
                     <span class="input-group-addon">号</span>
                 </div><br>
                 <div class="input-group">
@@ -62,40 +87,89 @@
                         </select>
                     </div>
                 </div><hr>
-                <button type="submit" class="btn btn-block btn-primary">提交</button>
-            </form>
+                <div class="center-block">
+                    <button v-on:click="post" class="btn btn-primary btn-lg">提交</button>
+                    <button v-on:click="postDefault" class="btn btn-success btn-lg">提交测试默认值</button>
+                </div>
+                <hr>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="js/vue-resource.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
 <script>
+    Vue.http.options.emulateJSON = true;
+    Vue.http.options.crossOrigin = true;
     var qr_generator = new Vue({
         el:'#qr_form',
         data:{
-                merId:'',
-                storeCode:'',
-                outTradNo:'',
-                orderAmt:'',
-                tradeDate:'',
-                tradeTime:'',
-                payExpire:'',
-                tporderCreateIp:'',
-                notifyFlagInput:''
+            merId: '',
+            storeCode: '',
+            outTradeNo: '',
+            orderAmt: '',
+            tradeDate: '',
+            tradeTime: '',
+            payExpire: '',
+            tporderCreateIp: '',
+            notifyFlagInput: '',
         },
         methods:{
+            postDefault:function() {
+                this.merId = '020002040095';
+                this.storeCode = '02000015087';
+                this.outTradeNo = 'ZHL777O15002039';
+                this.orderAmt = '7370';
+                this.tradeDate = '20171210';
+                this.tradeTime = '160346';
+                this.payExpire = '1200';
+                this.tporderCreateIp = '127.0.0.1';
+                this.notifyFlagInput = '1';
+                this.post();
+            },
             post:function() {
-                this.$http.post('http://localhost:8080/demo/qr/getQrCode').then(function(result) {
-                    alert(result)
-                }, function (result) {
-                    alert(result)
+                Pace.restart();
+                this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
+                    'merId':this.merId,
+                    'storeCode':this.storeCode,
+                    'outTradeNo':this.outTradeNo,
+                    'orderAmt':this.orderAmt,
+                    'tradeDate':this.tradeDate,
+                    'tradeTime':this.tradeTime,
+                    'payExpire':this.payExpire,
+                    'tporderCreateIp':this.tporderCreateIp,
+                    'notifyFlag':this.notifyFlagInput
+                }, {
+                    'headers':{
+                        'Access-Control-Allow-Origin':'*'
+                    }
+                }).then(function(response) {
+                    var respText = response.bodyText;
+                    var respJson = JSON.parse(respText);
+                    if (respJson.status === "0") {
+                        qr_image_dialog.imageSrc = respJson.data;
+                    } else {
+                        qr_image_dialog.message = '获取二维码失败';
+                    }
+                    $('#qr-image-modal').modal('toggle');
+                    console.log(respJson);
+                }, function (response) {
+                    console.log(response)
                 });
             }
         }
     });
+
+    var qr_image_dialog = new Vue({
+        el:'#qr-image-dialog',
+        data:{
+            imageSrc:'',
+            message:''
+        }
+    })
 </script>
 </body>
 </html>
