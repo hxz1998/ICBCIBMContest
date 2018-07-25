@@ -1,7 +1,10 @@
 package ICBCIBMContest.controller;
 
-import ICBCIBMContest.model.SimpleQrRequestParam;
+import ICBCIBMContest.constant.ResponseStatusCode;
+import ICBCIBMContest.model.APITransmitObject;
+import ICBCIBMContest.model.impl.SimpleQrRequestParam;
 import ICBCIBMContest.services.QrGeneratorService;
+import ICBCIBMContest.util.APITransmitObjectFactory;
 import ICBCIBMContest.util.PropertiesFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +20,7 @@ public class QrRCodeGenerateController {
 
     private QrGeneratorService qrGeneratorService;
     private PropertiesFactory propertiesFactory;
-
+    private APITransmitObjectFactory apiTransmitObjectFactory;
 
     @RequestMapping("/hello")
     @ResponseBody
@@ -29,8 +32,14 @@ public class QrRCodeGenerateController {
     @RequestMapping(value = "/getQrCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getQrCode(@ModelAttribute SimpleQrRequestParam param) {
-        System.out.println(param);
-        return propertiesFactory.getPropertyValue("QR_GENERATOR_URL") + qrGeneratorService.getQrCode(param);
+        String result = qrGeneratorService.getQrCode(param);
+        if (result == null) {
+            APITransmitObject<String> apiTransmitObject = new APITransmitObject<>(ResponseStatusCode.ILLEGAL_PARAM, "转换失败", "转换失败");
+            return APITransmitObjectFactory.getJSON(apiTransmitObject);
+        }
+        String url = propertiesFactory.getPropertyValue("QR_GENERATOR_URL") + qrGeneratorService.getQrCode(param);
+        APITransmitObject<String> apiTransmitObject = new APITransmitObject<>(ResponseStatusCode.OK, url, "转换成功");
+        return APITransmitObjectFactory.getJSON(apiTransmitObject);
     }
 
     public QrGeneratorService getQrGeneratorService() {
@@ -49,5 +58,14 @@ public class QrRCodeGenerateController {
     @Resource
     public void setPropertiesFactory(PropertiesFactory propertiesFactory) {
         this.propertiesFactory = propertiesFactory;
+    }
+
+    public APITransmitObjectFactory getApiTransmitObjectFactory() {
+        return apiTransmitObjectFactory;
+    }
+
+    @Resource
+    public void setApiTransmitObjectFactory(APITransmitObjectFactory apiTransmitObjectFactory) {
+        this.apiTransmitObjectFactory = apiTransmitObjectFactory;
     }
 }

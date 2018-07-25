@@ -134,7 +134,7 @@
         ```java
         package ICBCIBMContest.controller;
         
-        import ICBCIBMContest.model.SimpleQrRequestParam;
+        import ICBCIBMContest.model.impl.SimpleQrRequestParam;
         import ICBCIBMContest.services.QrGeneratorService;
         import ICBCIBMContest.util.PropertiesFactory;
         import org.springframework.stereotype.Controller;
@@ -213,5 +213,8 @@
             }
         });
         ```
+8. 使用 `javascript` 从字符串转化json对象和访问json对象的属性
+    * 使用 `JSON.parse(str)` 可以转化成为json对象
+    * 访问json对象的属性时直接用 `.` 来访问
         
        

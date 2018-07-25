@@ -1,4 +1,6 @@
-package ICBCIBMContest.model;
+package ICBCIBMContest.model.impl;
+
+import ICBCIBMContest.model.QrRequestParam;
 
 public class SimpleQrRequestParam implements QrRequestParam {
 

@@ -1,7 +1,7 @@
 package ICBCIBMContest.services;
 
 import ICBCIBMContest.model.QrRequestParam;
-import ICBCIBMContest.model.SimpleQrRequestParam;
+import ICBCIBMContest.model.impl.SimpleQrRequestParam;
 import ICBCIBMContest.util.PropertiesFactory;
 import com.icbc.api.DefaultIcbcClient;
 import com.icbc.api.IcbcApiException;
