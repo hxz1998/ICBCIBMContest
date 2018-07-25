@@ -216,5 +216,6 @@
 8. 使用 `javascript` 从字符串转化json对象和访问json对象的属性
     * 使用 `JSON.parse(str)` 可以转化成为json对象
     * 访问json对象的属性时直接用 `.` 来访问
-        
+9. 使用 `Pace.js` 监控加载进度时无法监控 `vue.js` 的post请求
+    * 解决方法：重新启动下 `Pace.js`，即调用 `Pace.restart();` 方法。    
        

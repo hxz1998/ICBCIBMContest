@@ -360,7 +360,7 @@ var LIFECYCLE_HOOKS = [
 
 var config = ({
   /**
-   * Option merge strategies (used in core/org.xiaozhong.util/options)
+   * Option merge strategies (used in core/util/options)
    */
   // $flow-disable-line
   optionMergeStrategies: Object.create(null),
@@ -4231,7 +4231,7 @@ function createComponent (
   // component constructor creation
   resolveConstructorOptions(Ctor);
 
-  // transform component v-org.xiaozhong.model data into props & events
+  // transform component v-model data into props & events
   if (isDef(data.model)) {
     transformModel(Ctor.options, data);
   }
@@ -4312,7 +4312,7 @@ function installComponentHooks (data) {
   }
 }
 
-// transform component v-org.xiaozhong.model info (value and callback) into
+// transform component v-model info (value and callback) into
 // prop and event handler respectively.
 function transformModel (options, data) {
   var prop = (options.model && options.model.prop) || 'value';
@@ -5026,7 +5026,7 @@ function initGlobalAPI (Vue) {
   }
   Object.defineProperty(Vue, 'config', configDef);
 
-  // exposed org.xiaozhong.util methods.
+  // exposed util methods.
   // NOTE: these are not considered part of the public API - avoid relying on
   // them unless you are aware of the risk.
   Vue.util = {
@@ -6692,7 +6692,7 @@ function getAndRemoveAttr (
 /*  */
 
 /**
- * Cross-platform code generation for component v-org.xiaozhong.model
+ * Cross-platform code generation for component v-model
  */
 function genComponentModel (
   el,
@@ -6724,7 +6724,7 @@ function genComponentModel (
 }
 
 /**
- * Cross-platform codegen helper for generating v-org.xiaozhong.model value assignment code.
+ * Cross-platform codegen helper for generating v-model value assignment code.
  */
 function genAssignmentCode (
   value,
@@ -6739,7 +6739,7 @@ function genAssignmentCode (
 }
 
 /**
- * Parse a v-org.xiaozhong.model expression into a base path and a final key segment.
+ * Parse a v-model expression into a base path and a final key segment.
  * Handles both dot-path and possible square brackets.
  *
  * Possible cases:
@@ -6764,7 +6764,7 @@ var expressionEndPos;
 
 function parseModel (val) {
   // Fix https://github.com/vuejs/vue/pull/7730
-  // allow v-org.xiaozhong.model="obj.val " (trailing whitespace)
+  // allow v-model="obj.val " (trailing whitespace)
   val = val.trim();
   len = val.length;
 
@@ -6867,7 +6867,7 @@ function model (
     // value will throw an error.
     if (tag === 'input' && type === 'file') {
       warn$1(
-        "<" + (el.tag) + " v-org.xiaozhong.model=\"" + value + "\" type=\"file\">:\n" +
+        "<" + (el.tag) + " v-model=\"" + value + "\" type=\"file\">:\n" +
         "File inputs are read only. Use a v-on:change listener instead."
       );
     }
@@ -6875,7 +6875,7 @@ function model (
 
   if (el.component) {
     genComponentModel(el, value, modifiers);
-    // component v-org.xiaozhong.model doesn't need extra runtime
+    // component v-model doesn't need extra runtime
     return false
   } else if (tag === 'select') {
     genSelect(el, value, modifiers);
@@ -6887,12 +6887,12 @@ function model (
     genDefaultModel(el, value, modifiers);
   } else if (!config.isReservedTag(tag)) {
     genComponentModel(el, value, modifiers);
-    // component v-org.xiaozhong.model doesn't need extra runtime
+    // component v-model doesn't need extra runtime
     return false
   } else {
     warn$1(
-      "<" + (el.tag) + " v-org.xiaozhong.model=\"" + value + "\">: " +
-      "v-org.xiaozhong.model is not supported on this element type. " +
+      "<" + (el.tag) + " v-model=\"" + value + "\">: " +
+      "v-model is not supported on this element type. " +
       'If you are working with contenteditable, it\'s recommended to ' +
       'wrap a library dedicated for that purpose inside a custom component.'
     );
@@ -6969,7 +6969,7 @@ function genDefaultModel (
 ) {
   var type = el.attrsMap.type;
 
-  // warn if v-bind:value conflicts with v-org.xiaozhong.model
+  // warn if v-bind:value conflicts with v-model
   // except for inputs with v-bind:type
   {
     var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
@@ -6977,7 +6977,7 @@ function genDefaultModel (
     if (value$1 && !typeBinding) {
       var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
       warn$1(
-        binding + "=\"" + value$1 + "\" conflicts with v-org.xiaozhong.model on the same element " +
+        binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
         'because the latter already expands to a value binding internally'
       );
     }
@@ -7016,9 +7016,9 @@ function genDefaultModel (
 
 /*  */
 
-// normalize v-org.xiaozhong.model event tokens that can only be determined at runtime.
+// normalize v-model event tokens that can only be determined at runtime.
 // it's important to place the event as the first in the array because
-// the whole point is ensuring the v-org.xiaozhong.model callback gets called before
+// the whole point is ensuring the v-model callback gets called before
 // user-attached handlers.
 function normalizeEvents (on) {
   /* istanbul ignore if */
@@ -7147,7 +7147,7 @@ function updateDOMProps (oldVnode, vnode) {
   }
 }
 
-// check platforms/web/org.xiaozhong.util/attrs.js acceptValue
+// check platforms/web/util/attrs.js acceptValue
 
 
 function shouldUpdateValue (elm, checkVal) {
@@ -7170,7 +7170,7 @@ function isNotInFocusAndDirty (elm, checkVal) {
 
 function isDirtyWithModifiers (elm, newVal) {
   var value = elm.value;
-  var modifiers = elm._vModifiers; // injected by v-org.xiaozhong.model runtime
+  var modifiers = elm._vModifiers; // injected by v-model runtime
   if (isDef(modifiers)) {
     if (modifiers.lazy) {
       // inputs with lazy should only be updated when not in focus
@@ -8015,7 +8015,7 @@ function actuallySetSelected (el, binding, vm) {
   var isMultiple = el.multiple;
   if (isMultiple && !Array.isArray(value)) {
     "development" !== 'production' && warn(
-      "<select multiple v-org.xiaozhong.model=\"" + (binding.expression) + "\"> " +
+      "<select multiple v-model=\"" + (binding.expression) + "\"> " +
       "expects an Array value for its binding, but got " + (Object.prototype.toString.call(value).slice(8, -1)),
       vm
     );
@@ -9676,11 +9676,11 @@ function checkForAliasModel (el, value) {
   while (_el) {
     if (_el.for && _el.alias === value) {
       warn$2(
-        "<" + (el.tag) + " v-org.xiaozhong.model=\"" + value + "\">: " +
-        "You are binding v-org.xiaozhong.model directly to a v-for iteration alias. " +
+        "<" + (el.tag) + " v-model=\"" + value + "\">: " +
+        "You are binding v-model directly to a v-for iteration alias. " +
         "This will not be able to modify the v-for source array because " +
         "writing to the alias is like modifying a function local variable. " +
-        "Consider using an array of objects and use v-org.xiaozhong.model on an object property instead."
+        "Consider using an array of objects and use v-model on an object property instead."
       );
     }
     _el = _el.parent;
@@ -9690,19 +9690,19 @@ function checkForAliasModel (el, value) {
 /*  */
 
 /**
- * Expand input[v-org.xiaozhong.model] with dyanmic type bindings into v-if-else chains
+ * Expand input[v-model] with dyanmic type bindings into v-if-else chains
  * Turn this:
- *   <input v-org.xiaozhong.model="data[type]" :type="type">
+ *   <input v-model="data[type]" :type="type">
  * into this:
- *   <input v-if="type === 'checkbox'" type="checkbox" v-org.xiaozhong.model="data[type]">
- *   <input v-else-if="type === 'radio'" type="radio" v-org.xiaozhong.model="data[type]">
- *   <input v-else :type="type" v-org.xiaozhong.model="data[type]">
+ *   <input v-if="type === 'checkbox'" type="checkbox" v-model="data[type]">
+ *   <input v-else-if="type === 'radio'" type="radio" v-model="data[type]">
+ *   <input v-else :type="type" v-model="data[type]">
  */
 
 function preTransformNode (el, options) {
   if (el.tag === 'input') {
     var map = el.attrsMap;
-    if (!map['v-org.xiaozhong.model']) {
+    if (!map['v-model']) {
       return
     }
 
@@ -10326,9 +10326,9 @@ function genData$2 (el, state) {
   if (el.scopedSlots) {
     data += (genScopedSlots(el.scopedSlots, state)) + ",";
   }
-  // component v-org.xiaozhong.model
+  // component v-model
   if (el.model) {
-    data += "org.xiaozhong.model:{value:" + (el.model.value) + ",callback:" + (el.model.callback) + ",expression:" + (el.model.expression) + "},";
+    data += "model:{value:" + (el.model.value) + ",callback:" + (el.model.callback) + ",expression:" + (el.model.expression) + "},";
   }
   // inline-template
   if (el.inlineTemplate) {

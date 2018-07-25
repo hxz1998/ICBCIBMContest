@@ -8,8 +8,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>二维码生成</title>
     <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/pace/pace-theme-loading-bar.css" rel="stylesheet"/>
+    <script src="js/pace.min.js"></script>
 </head>
 <body>
+
+<div id="qr-image-dialog">
+    <div class="modal fade" id="qr-image-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">呐~</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row center-block">
+                        <img class="center-block" v-bind:src="imageSrc"/>
+                        <h3 class="text-center">{{ message }}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container">
     <div class="page-header">
@@ -17,7 +42,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">二维码生成</h3>
+            <h2 class="panel-title">二维码生成</h2>
         </div>
         <div class="panel-body">
             <div id="qr_form">
@@ -62,9 +87,11 @@
                         </select>
                     </div>
                 </div><hr>
-                <button v-on:click="post" class="btn btn-block btn-primary">提交</button>
+                <div class="center-block">
+                    <button v-on:click="post" class="btn btn-primary btn-lg">提交</button>
+                    <button v-on:click="postDefault" class="btn btn-success btn-lg">提交测试默认值</button>
+                </div>
                 <hr>
-                <img v-bind:src="imageSrc"/>
             </div>
         </div>
     </div>
@@ -89,10 +116,22 @@
             payExpire: '',
             tporderCreateIp: '',
             notifyFlagInput: '',
-            imageSrc:''
         },
         methods:{
+            postDefault:function() {
+                this.merId = '020002040095';
+                this.storeCode = '02000015087';
+                this.outTradeNo = 'ZHL777O15002039';
+                this.orderAmt = '7370';
+                this.tradeDate = '20171210';
+                this.tradeTime = '160346';
+                this.payExpire = '1200';
+                this.tporderCreateIp = '127.0.0.1';
+                this.notifyFlagInput = '1';
+                this.post();
+            },
             post:function() {
+                Pace.restart();
                 this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
                     'merId':this.merId,
                     'storeCode':this.storeCode,
@@ -103,14 +142,34 @@
                     'payExpire':this.payExpire,
                     'tporderCreateIp':this.tporderCreateIp,
                     'notifyFlag':this.notifyFlagInput
+                }, {
+                    'headers':{
+                        'Access-Control-Allow-Origin':'*'
+                    }
                 }).then(function(response) {
-                    this.imageSrc = response.bodyText;
+                    var respText = response.bodyText;
+                    var respJson = JSON.parse(respText);
+                    if (respJson.status === "0") {
+                        qr_image_dialog.imageSrc = respJson.data;
+                    } else {
+                        qr_image_dialog.message = '获取二维码失败';
+                    }
+                    $('#qr-image-modal').modal('toggle');
+                    console.log(respJson);
                 }, function (response) {
                     console.log(response)
                 });
             }
         }
     });
+
+    var qr_image_dialog = new Vue({
+        el:'#qr-image-dialog',
+        data:{
+            imageSrc:'',
+            message:''
+        }
+    })
 </script>
 </body>
 </html>
