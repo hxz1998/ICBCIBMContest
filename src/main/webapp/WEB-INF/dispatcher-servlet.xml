@@ -23,5 +23,6 @@
     <context:component-scan base-package="ICBCIBMContest.services"/>
     <context:component-scan base-package="ICBCIBMContest.util"/>
     <context:component-scan base-package="ICBCIBMContest.controller"/>
+    <context:component-scan base-package="ICBCIBMContest.config"/>
 
 </beans>

@@ -75,6 +75,8 @@
 <script src="js/vue.js"></script>
 <script src="js/vue-resource.js"></script>
 <script>
+    Vue.http.options.emulateJSON = true;
+    Vue.http.options.crossOrigin = true;
     var qr_generator = new Vue({
         el:'#qr_form',
         data:{
@@ -92,20 +94,19 @@
         methods:{
             post:function() {
                 this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
-                    merId:this.merId,
-                    storeCode:this.storeCode,
-                    outTradeNo:this.outTradeNo,
-                    orderAmt:this.orderAmt,
-                    tradeDate:this.tradeDate,
-                    tradeTime:this.tradeTime,
-                    payExpire:this.payExpire,
-                    tporderCreateIp:this.tporderCreateIp,
-                    notifyFlagInput:this.notifyFlagInput
+                    'merId':this.merId,
+                    'storeCode':this.storeCode,
+                    'outTradeNo':this.outTradeNo,
+                    'orderAmt':this.orderAmt,
+                    'tradeDate':this.tradeDate,
+                    'tradeTime':this.tradeTime,
+                    'payExpire':this.payExpire,
+                    'tporderCreateIp':this.tporderCreateIp,
+                    'notifyFlag':this.notifyFlagInput
                 }).then(function(response) {
-                    this.imageSrc = response.body.result;
-                    alert(response.body.result)
+                    this.imageSrc = response.bodyText;
                 }, function (response) {
-                    alert(response)
+                    console.log(response)
                 });
             }
         }

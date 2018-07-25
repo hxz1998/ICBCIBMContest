@@ -4,6 +4,7 @@ import ICBCIBMContest.model.SimpleQrRequestParam;
 import ICBCIBMContest.services.QrGeneratorService;
 import ICBCIBMContest.util.PropertiesFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,7 @@ public class QrRCodeGenerateController {
         return "HELLO KETTY";
     }
 
+    @CrossOrigin("http://localhost:63343")
     @RequestMapping(value = "/getQrCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getQrCode(@ModelAttribute SimpleQrRequestParam param) {
