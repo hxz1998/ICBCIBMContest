@@ -36,12 +36,4 @@ public class APITransmitObject<T> {
         this.msg = msg;
     }
 
-    @Override
-    public String toString() {
-        return "APITransmitObject{" +
-                "status='" + status + '\'' +
-                ", data=" + data +
-                ", msg='" + msg + '\'' +
-                '}';
-    }
 }

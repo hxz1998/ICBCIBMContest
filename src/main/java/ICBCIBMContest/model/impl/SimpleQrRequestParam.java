@@ -1,8 +1,12 @@
 package ICBCIBMContest.model.impl;
 
 import ICBCIBMContest.model.QrRequestParam;
+import ICBCIBMContest.model.Verifiable;
+import ICBCIBMContest.services.exception.ParamEmptyException;
 
-public class SimpleQrRequestParam implements QrRequestParam {
+import java.lang.reflect.Field;
+
+public class SimpleQrRequestParam implements QrRequestParam, Verifiable {
 
     //商户线下档案编号
     private String merId;
@@ -108,5 +112,23 @@ public class SimpleQrRequestParam implements QrRequestParam {
                 ", tporderCreateIp='" + tporderCreateIp + '\'' +
                 ", notifyFlag='" + notifyFlag + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean verify(){
+        Class clazz = this.getClass();
+        Field[] fs = clazz.getDeclaredFields();
+        for (Field f : fs) {
+            Object obj = null;
+            try {
+                obj = f.get(this);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if (obj == null  || obj.equals("")) {
+                throw new ParamEmptyException();
+            }
+        }
+        return true;
     }
 }

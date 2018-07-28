@@ -1,7 +1,11 @@
 package ICBCIBMContest.services;
 
+import ICBCIBMContest.model.APITransmitObject;
 import ICBCIBMContest.model.QrRequestParam;
 import ICBCIBMContest.model.impl.SimpleQrRequestParam;
+import ICBCIBMContest.services.exception.ApiServersException;
+import ICBCIBMContest.services.exception.ParamEmptyException;
+import ICBCIBMContest.services.exception.ParamIllegalException;
 import ICBCIBMContest.util.PropertiesFactory;
 import com.icbc.api.DefaultIcbcClient;
 import com.icbc.api.IcbcApiException;
@@ -53,12 +57,14 @@ public class QrGeneratorService {
         QR_GENERATOR_URL = propertiesFactory.getPropertyValue("QR_GENERATOR_URL");
     }
 
-    public String getQrCode(QrRequestParam qrRequestParam) {
-
+    public APITransmitObject getQrCode(QrRequestParam qrRequestParam) throws ParamEmptyException,
+            ParamIllegalException, ApiServersException {
         //填充配置文件内容
         if (APP_ID == null || MY_PRIVATE_KEY == null || APIGW_PUBLIC_KEY == null || SERVER_URL == null) {
             init();
         }
+        //验证参数是否合法
+        ((SimpleQrRequestParam) qrRequestParam).verify();
         //签名类型为RSA2时，需传入appid，私钥和网关公钥，签名类型使用定值IcbcConstants.SIGN_TYPE_RSA2，其他参数使用缺省值
         DefaultIcbcClient client = new DefaultIcbcClient(APP_ID, IcbcConstants.SIGN_TYPE_RSA, MY_PRIVATE_KEY, APIGW_PUBLIC_KEY);
         QrcodeGenerateRequestV2 request = new QrcodeGenerateRequestV2();
@@ -76,17 +82,19 @@ public class QrGeneratorService {
         bizContent.setNotifyFlag(param.getNotifyFlag());
         request.setBizContent(bizContent);
         QrcodeGenerateResponseV2 response = new QrcodeGenerateResponseV2();
+        APITransmitObject<String> apiTransmitObject = null;
         try {
             response = client.execute(request, "12");
             if (response.isSuccess()) {
                 // 业务成功处理
-                return response.getQrcode();
+                apiTransmitObject = new APITransmitObject<>(response.getReturnCode() + "",
+                        response.getQrcode(), response.getReturnMsg());
             } else {
                 // 失败
-                System.out.println("ReturnCode:" + response.getReturnCode());
-                System.out.println("ReturnMsg:" + response.getReturnMsg());
-                return null;
+                apiTransmitObject = new APITransmitObject<>(response.getReturnCode() + "",
+                        response.getQrcode(), response.getReturnMsg());
             }
+            return apiTransmitObject;
         } catch (IcbcApiException e) {
             e.printStackTrace();
             return null;
