@@ -28,7 +28,7 @@ public class QrRCodeGenerateController {
         return "HELLO KETTY";
     }
 
-    @CrossOrigin("http://localhost:63343")
+    @CrossOrigin("http://localhost:63342")
     @RequestMapping(value = "/getQrCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getQrCode(@ModelAttribute SimpleQrRequestParam param) {

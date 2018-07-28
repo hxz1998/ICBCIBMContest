@@ -151,7 +151,9 @@
                     var respJson = JSON.parse(respText);
                     if (respJson.status === "0") {
                         qr_image_dialog.imageSrc = respJson.data;
+                        qr_image_dialog.message = '';
                     } else {
+                        qr_image_dialog.imageSrc = '';
                         qr_image_dialog.message = '获取二维码失败';
                     }
                     $('#qr-image-modal').modal('toggle');
@@ -168,7 +170,7 @@
         data:{
             imageSrc:'',
             message:''
-        }
+        },
     })
 </script>
 </body>
