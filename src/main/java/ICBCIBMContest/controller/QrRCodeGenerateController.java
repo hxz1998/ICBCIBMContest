@@ -50,7 +50,6 @@ public class QrRCodeGenerateController {
             apiTransmitObject = new APITransmitObject<>(ResponseStatusCode.SERVER_ERROR,
                     "null", "服务器错误");
         } finally {
-            System.out.println(APITransmitObjectFactory.getJSON(apiTransmitObject));
             return APITransmitObjectFactory.getJSON(apiTransmitObject);
         }
     }

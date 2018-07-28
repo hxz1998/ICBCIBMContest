@@ -154,7 +154,7 @@
                         qr_image_dialog.message = '';
                     } else {
                         qr_image_dialog.imageSrc = '';
-                        qr_image_dialog.message = '获取二维码失败';
+                        qr_image_dialog.message = respJson.msg;
                     }
                     $('#qr-image-modal').modal('toggle');
                     console.log(respJson);
