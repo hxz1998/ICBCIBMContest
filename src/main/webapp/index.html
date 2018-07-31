@@ -2,7 +2,7 @@
     Created By Hu
  -->
 <!DOCTYPE html>
-<html lang="zh-ch">
+<html lang="zh-ch" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +12,28 @@
     <link href="css/pace/pace-theme-minimal.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="qr-image-dialog">
+    <div class="modal fade" id="qr-image-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">呐~</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row center-block">
+                        <img class="center-block" v-bind:src="imageSrc"/>
+                        <h3 class="text-center">{{ message }}</h3>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="app">
     <!--通用导航-->
     <nav class="navbar navbar-default">
@@ -139,6 +161,7 @@
                 <li><a href="#">二维码扫码支付</a></li>
                 <li class="active">二维码生成</li>
             </ol>
+            <qr-pay-panel></qr-pay-panel>
         </div>
     </div>
 </template>
@@ -162,43 +185,152 @@
     </div>
 </template>
 
+<template id="qrPay">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">二维码生成</h2>
+        </div>
+        <div class="panel-body">
+            <div id="qr_form">
+                <div class="input-group">
+                    <input v-model="merId" name="merId" type="text" class="form-control"
+                           placeholder="商户线下档案编号"/>
+                    <span class="input-group-addon">号</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="storeCode" name="storeCode" type="text" class="form-control"
+                           placeholder="e生活档案编号"/>
+                    <span class="input-group-addon">号</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="outTradeNo" name="outTradeNo" type="text" class="form-control"
+                           placeholder="商户系统订单号"/>
+                    <span class="input-group-addon">号</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="orderAmt" name="orderAmt" type="text" class="form-control"
+                           placeholder="订单总金额"/>
+                    <span class="input-group-addon">元</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="tradeDate" name="tradeDate" type="text" class="form-control"
+                           placeholder="订单生成日期"/>
+                    <span class="input-group-addon">年-月-日</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="tradeTime" name="tradeTime" type="text" class="form-control"
+                           placeholder="订单生成时间"/>
+                    <span class="input-group-addon">时-分-秒</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="payExpire" name="payExpire" type="text" class="form-control"
+                           placeholder="二维码有效期"/>
+                    <span class="input-group-addon">秒</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <input v-model="tporderCreateIp" name="tporderCreateIp" type="text" class="form-control"
+                           placeholder="订单生成的机器IP"/>
+                    <span class="input-group-addon">IP地址</span>
+                </div>
+                <br>
+                <div class="input-group">
+                    <label for="notifyFlagInput" class="col-lg-8 control-label">是否开启通知接口</label>
+                    <div class="col-lg-8">
+                        <select v-model="notifyFlagInput" id="notifyFlagInput" name="notifyFlag"
+                                class="form-control">
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="center-block">
+                    <button v-on:click="post" class="btn btn-primary btn-lg">提交</button>
+                    <button v-on:click="postDefault" class="btn btn-success btn-lg">提交测试默认值</button>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</template>
+
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/vue-router.js"></script>
+<script src="js/vue-resource.js"></script>
 <script>
-    var routes = [
-        {
-            path: '/',
-            component: {
-                template: '#home'
+    Vue.component('qr-pay-panel', {
+        data:function () {
+            return {
+                merId: '',
+                storeCode: '',
+                outTradeNo: '',
+                orderAmt: '',
+                tradeDate: '',
+                tradeTime: '',
+                payExpire: '',
+                tporderCreateIp: '',
+                notifyFlagInput: '',
             }
         },
-        {
-            path: '/library',
-            component: {
-                template: '#library'
-            }
-        },
-        {
-            path: '/about',
-            component: {
-                template: '#about'
+        template:'#qrPay',
+        methods: {
+            postDefault: function () {
+                this.merId = '020002040095';
+                this.storeCode = '02000015087';
+                this.outTradeNo = 'ZHL777O15002039';
+                this.orderAmt = '7370';
+                this.tradeDate = '20171210';
+                this.tradeTime = '160346';
+                this.payExpire = '1200';
+                this.tporderCreateIp = '127.0.0.1';
+                this.notifyFlagInput = '1';
+                this.post();
+            },
+            post: function () {
+                Pace.restart();
+                this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
+                    'merId': this.merId,
+                    'storeCode': this.storeCode,
+                    'outTradeNo': this.outTradeNo,
+                    'orderAmt': this.orderAmt,
+                    'tradeDate': this.tradeDate,
+                    'tradeTime': this.tradeTime,
+                    'payExpire': this.payExpire,
+                    'tporderCreateIp': this.tporderCreateIp,
+                    'notifyFlag': this.notifyFlagInput
+                }, {
+                    'headers': {
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                }).then(function (response) {
+                    var respText = response.bodyText;
+                    var respJson = JSON.parse(respText);
+                    if (respJson.status === "0") {
+                        qr_image_dialog.imageSrc = respJson.data;
+                        qr_image_dialog.message = '';
+                    } else {
+                        qr_image_dialog.imageSrc = '';
+                        qr_image_dialog.message = respJson.msg;
+                    }
+                    $('#qr-image-modal').modal('toggle');
+                    console.log(respJson);
+                }, function (response) {
+                    console.log(response)
+                });
             }
         }
-    ];
 
-    var router = new VueRouter({
-        routes: routes
-    });
-
-    var vm = new Vue({
-        el: '#app',
-        router: router,
-        mounted: function () {
-            console.log(router)
-        }
     })
 </script>
+<script src="js/main.js"></script>
 </body>
 </html>
