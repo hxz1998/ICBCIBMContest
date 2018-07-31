@@ -12,23 +12,193 @@
     <link href="css/pace/pace-theme-minimal.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="app">
+    <!--通用导航-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-content" aria-expanded="false">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ICBC-IBM-Contest</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <router-link to="/">主页</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/library">库</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/about">关于</router-link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="container">
+    <!--目标内容渲染视图-->
+    <div>
+        <router-view></router-view>
+    </div>
 
-<div class="jumbotron">
-    <h1>Hello World</h1>
-    <p>...</p>
-    <a class="btn btn-primary btn-lg">Learn more</a>
+    <!--页脚-->
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <address class="center-block text-center">
+            <br>
+            <strong>ICBC-IBM-Contest</strong>&nbsp;&copy;<strong>Xiaozhong</strong>
+            <a href="mailto:#">helloprofessor@outlook.com</a>
+        </address>
+    </nav>
 </div>
 
-<ul class="nav nav-pills nav-justified">
-    <li role="presentation"><a href="index.html">主页</a></li>
-    <li role="presentation"><a href="qr_generator.html">二维码生成</a></li>
-    <li role="presentation"><a href="#">其他</a></li>
-</ul>
-</div>
+<template id="library">
+    <div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#app-list" aria-expanded="false">
+                        <span class="sr-only"></span><span class="caret"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">应用列表</a>
+                </div>
+                <div class="collapse navbar-collapse" id="app-list">
+                    <ul class="nav navbar-nav">
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                账户管理服务 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">线上账户服务</a></li>
+                                <li><a href="#">财务查询</a></li>
+                                <li><a href="#">信用卡办卡</a></li>
+                            </ul>
+                        </li>
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                商户收单服务 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">小额免密</a></li>
+                                <li><a href="#">APP移动在线支付</a></li>
+                                <li><a href="#">生物识别支付</a></li>
+                                <li><a href="#">Apple Pay支付</a></li>
+                                <li><a href="#">H5移动在线支付</a></li>
+                                <li><a href="#">工银e缴费</a></li>
+                                <li><a href="#">二维码扫码支付</a></li>
+                            </ul>
+                        </li>
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                安全认证服务 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">融安e信</a></li>
+                                <li><a href="#">在线身份认证</a></li>
+                            </ul>
+                        </li>
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                商户运营服务 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">工银e生活</a></li>
+                            </ul>
+                        </li>
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">
+                                资金结算服务 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">境内汇款</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <ol class="breadcrumb">
+                <li><a href="#">商户收单服务</a></li>
+                <li><a href="#">二维码扫码支付</a></li>
+                <li class="active">二维码生成</li>
+            </ol>
+        </div>
+    </div>
+</template>
+
+<template id="home">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello.World</h1>
+            <p>
+                <button class="btn btn-danger">安妮</button>
+            </p>
+        </div>
+    </div>
+</template>
+
+<template id="about">
+    <div class="container">
+        <div class="page-header">
+            <h1>ICBC竞赛</h1>
+        </div>
+    </div>
+</template>
+
 <script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+    var routes = [
+        {
+            path: '/',
+            component: {
+                template: '#home'
+            }
+        },
+        {
+            path: '/library',
+            component: {
+                template: '#library'
+            }
+        },
+        {
+            path: '/about',
+            component: {
+                template: '#about'
+            }
+        }
+    ];
+
+    var router = new VueRouter({
+        routes: routes
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        router: router,
+        mounted: function () {
+            console.log(router)
+        }
+    })
+</script>
 </body>
 </html>

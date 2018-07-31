@@ -18,7 +18,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h3 class="modal-title" id="myModalLabel">呐~</h3>
                 </div>
                 <div class="modal-body">
@@ -36,7 +37,7 @@
 </div>
 
 
-<div class="container">
+<div class="container-fluid">
     <div class="page-header">
         <h1>二维码生成</h1>
     </div>
@@ -49,35 +50,45 @@
                 <div class="input-group">
                     <input v-model="merId" name="merId" type="text" class="form-control" placeholder="商户线下档案编号"/>
                     <span class="input-group-addon">号</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
                     <input v-model="storeCode" name="storeCode" type="text" class="form-control" placeholder="e生活档案编号"/>
                     <span class="input-group-addon">号</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
-                    <input v-model="outTradeNo" name="outTradeNo" type="text" class="form-control" placeholder="商户系统订单号"/>
+                    <input v-model="outTradeNo" name="outTradeNo" type="text" class="form-control"
+                           placeholder="商户系统订单号"/>
                     <span class="input-group-addon">号</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
                     <input v-model="orderAmt" name="orderAmt" type="text" class="form-control" placeholder="订单总金额"/>
                     <span class="input-group-addon">元</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
                     <input v-model="tradeDate" name="tradeDate" type="text" class="form-control" placeholder="订单生成日期"/>
                     <span class="input-group-addon">年-月-日</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
                     <input v-model="tradeTime" name="tradeTime" type="text" class="form-control" placeholder="订单生成时间"/>
                     <span class="input-group-addon">时-分-秒</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
                     <input v-model="payExpire" name="payExpire" type="text" class="form-control" placeholder="二维码有效期"/>
                     <span class="input-group-addon">秒</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
-                    <input v-model="tporderCreateIp" name="tporderCreateIp" type="text" class="form-control" placeholder="订单生成的机器IP"/>
+                    <input v-model="tporderCreateIp" name="tporderCreateIp" type="text" class="form-control"
+                           placeholder="订单生成的机器IP"/>
                     <span class="input-group-addon">IP地址</span>
-                </div><br>
+                </div>
+                <br>
                 <div class="input-group">
                     <label for="notifyFlagInput" class="col-lg-8 control-label">是否开启通知接口</label>
                     <div class="col-lg-8">
@@ -86,7 +97,8 @@
                             <option value="0">否</option>
                         </select>
                     </div>
-                </div><hr>
+                </div>
+                <hr>
                 <div class="center-block">
                     <button v-on:click="post" class="btn btn-primary btn-lg">提交</button>
                     <button v-on:click="postDefault" class="btn btn-success btn-lg">提交测试默认值</button>
@@ -98,15 +110,15 @@
 </div>
 
 <script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/vue-resource.js"></script>
 <script>
     Vue.http.options.emulateJSON = true;
     Vue.http.options.crossOrigin = true;
     var qr_generator = new Vue({
-        el:'#qr_form',
-        data:{
+        el: '#qr_form',
+        data: {
             merId: '',
             storeCode: '',
             outTradeNo: '',
@@ -117,8 +129,8 @@
             tporderCreateIp: '',
             notifyFlagInput: '',
         },
-        methods:{
-            postDefault:function() {
+        methods: {
+            postDefault: function () {
                 this.merId = '020002040095';
                 this.storeCode = '02000015087';
                 this.outTradeNo = 'ZHL777O15002039';
@@ -130,23 +142,23 @@
                 this.notifyFlagInput = '1';
                 this.post();
             },
-            post:function() {
+            post: function () {
                 Pace.restart();
                 this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
-                    'merId':this.merId,
-                    'storeCode':this.storeCode,
-                    'outTradeNo':this.outTradeNo,
-                    'orderAmt':this.orderAmt,
-                    'tradeDate':this.tradeDate,
-                    'tradeTime':this.tradeTime,
-                    'payExpire':this.payExpire,
-                    'tporderCreateIp':this.tporderCreateIp,
-                    'notifyFlag':this.notifyFlagInput
+                    'merId': this.merId,
+                    'storeCode': this.storeCode,
+                    'outTradeNo': this.outTradeNo,
+                    'orderAmt': this.orderAmt,
+                    'tradeDate': this.tradeDate,
+                    'tradeTime': this.tradeTime,
+                    'payExpire': this.payExpire,
+                    'tporderCreateIp': this.tporderCreateIp,
+                    'notifyFlag': this.notifyFlagInput
                 }, {
-                    'headers':{
-                        'Access-Control-Allow-Origin':'*'
+                    'headers': {
+                        'Access-Control-Allow-Origin': '*'
                     }
-                }).then(function(response) {
+                }).then(function (response) {
                     var respText = response.bodyText;
                     var respJson = JSON.parse(respText);
                     if (respJson.status === "0") {
@@ -166,12 +178,12 @@
     });
 
     var qr_image_dialog = new Vue({
-        el:'#qr-image-dialog',
-        data:{
-            imageSrc:'',
-            message:''
+        el: '#qr-image-dialog',
+        data: {
+            imageSrc: '',
+            message: ''
         },
-    })
+    });
 </script>
 </body>
 </html>
