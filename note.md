@@ -218,4 +218,14 @@
     * 访问json对象的属性时直接用 `.` 来访问
 9. 使用 `Pace.js` 监控加载进度时无法监控 `vue.js` 的post请求
     * 解决方法：重新启动下 `Pace.js`，即调用 `Pace.restart();` 方法。    
-       
+10. 使用Linux下的tomcat启动慢或者时间严重不稳定
+    * 网络查询解决方法：
+        ```text
+        JVM因为某种原因被阻塞了。
+        解决方案：安装rngd服务（熵服务）
+        执行命令： yum -y install rng-tools
+        echo 'EXTRAOPTIONS="--rng-device /dev/urandom"' >/etc/sysconfig/rngd
+        service rngd start
+        chkconfig rngd on
+        chkconfig --list rngd
+        ```   
