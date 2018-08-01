@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ICBC-IBM-Contest</a>
+                <a class="navbar-brand" href="#">iFinance</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-content">
                 <ul class="nav navbar-nav navbar-right">
@@ -72,11 +72,11 @@
     </div>
 
     <!--页脚-->
-    <nav class="navbar navbar-default navbar-fixed-bottom">
+    <nav class="navbar navbar-default bottom">
         <address class="center-block text-center">
             <br>
-            <strong>ICBC-IBM-Contest</strong>&nbsp;&copy;<strong>Xiaozhong</strong>
-            <a href="mailto:#">helloprofessor@outlook.com</a>
+            For <strong>ICBC-IBM-Contest.</strong> &copy; <strong>Xiaozhong</strong>
+            <a href="mailto:helloprofessor@outlook.com">helloprofessor@outlook.com</a>
         </address>
     </nav>
 </div>
@@ -195,13 +195,71 @@
                 <qr-pay-panel></qr-pay-panel>
             </div>
             <div v-else-if="$route.params.part != ' ' && $route.params.section != null">
-                <div class="page-header">
-                    <h3>暂未开放</h3>
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3>Sorry，应用暂未开放。😜</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h5>您可以选择以下应用：</h5>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID号</th>
+                                <th>服务名</th>
+                                <th>可访问性</th>
+                                <th>链接</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="success">
+                                <td>1</td>
+                                <td>商户收单服务/二维码扫码支付</td>
+                                <td>可以</td>
+                                <td>
+                                    <router-link to="/library/商户收单服务/二维码扫码支付"><span class="glyphicon glyphicon-play"
+                                                                                    aria-hidden="true"></span>
+                                    </router-link>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>iFinance 奉上</strong>
+                    </div>
                 </div>
             </div>
             <div v-else>
-                <div class="page-header">
-                    <h3>选择一个应用</h3>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>请选择一个应用👆</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="alert alert-info"><strong>注意!</strong>目前应用处于测试阶段，可访问的应用为：<br>
+                        </div>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID号</th>
+                                <th>服务名</th>
+                                <th>可访问性</th>
+                                <th>链接</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="success">
+                                <td>1</td>
+                                <td>商户收单服务/二维码扫码支付</td>
+                                <td>可以</td>
+                                <td>
+                                    <router-link to="/library/商户收单服务/二维码扫码支付"><span class="glyphicon glyphicon-play"
+                                                                                    aria-hidden="true"></span>
+                                    </router-link>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -210,11 +268,10 @@
 
 <template id="home">
     <div class="jumbotron">
-        <div class="container">
-            <h1>Hello.World</h1>
-            <p>
-                <button class="btn btn-danger">安妮</button>
-            </p>
+        <div class="container text-center">
+            <h1>Hello.iFinance</h1>
+            <h2>应用让生活更简单</h2>
+            <p></p><a href="http://www.cnmooc.org/race/index.mooc" class="btn btn-primary btn-lg">了解更多</a>
         </div>
     </div>
 </template>
@@ -222,15 +279,26 @@
 <template id="about">
     <div class="container">
         <div class="page-header">
-            <h1>ICBC竞赛</h1>
+            <h1 class="text-center">金融服务应用</h1>
         </div>
+        <dl class="dl-horizontal">
+            <dt>API服务提供：</dt>
+            <dd>中国工商银行股份有限公司、国际商业机器（中国）有限公司</dd>
+            <dt>开发团队：</dt>
+            <dd>iFinance.org</dd>
+            <dt>开发背景：</dt>
+            <dd>
+                传统银行业正面临着巨大的转型挑战，移动互联网、大数据、云计算、人工智能、区块链等新一代信息技术加速改造金融业态，在这种形势下，拥抱金融科技，创新金融产品和服务模式、改进运营流程、极致用户体验成为构建未来智慧银行的重要任务。开放API不仅成为了银行业面对互联网＋跨界创新趋势下非常有利的工具，而且在贯穿银行IT
+                整体应用构架建设过程中，对应用整合能力的提升、金融服务的再创新、用户体验的全方位提高都有着立竿见影的作用。
+            </dd>
+        </dl>
     </div>
 </template>
 
 <template id="qrPay">
     <div>
         <qr-image-dialog ref="qr_image_dialog"></qr-image-dialog>
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 <h2 class="panel-title">二维码生成</h2>
             </div>
