@@ -1,4 +1,3 @@
-
 Vue.http.options.emulateJSON = true;
 Vue.http.options.crossOrigin = true;
 Vue.component('qr-image-dialog', {
@@ -91,6 +90,24 @@ var routes = [
         path: '/library',
         component: {
             template: '#library'
+        }
+    },
+    {
+        path: '/library/:part',
+        component: {
+            template: '#library'
+        }
+    },
+    {
+        path: '/library/:part/:section',
+        component: {
+            template: '#library'
+        }
+    },
+    {
+        path: '/library/商户收单服务/二维码扫码支付',
+        component: {
+            template: ''
         }
     },
     {

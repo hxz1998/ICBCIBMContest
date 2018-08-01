@@ -90,7 +90,7 @@
                             data-target="#app-list" aria-expanded="false">
                         <span class="sr-only"></span><span class="caret"></span>
                     </button>
-                    <a class="navbar-brand" href="#">应用列表</a>
+                    <router-link class="navbar-brand" to="/library">应用列表</router-link>
                 </div>
                 <div class="collapse navbar-collapse" id="app-list">
                     <ul class="nav navbar-nav">
@@ -101,9 +101,15 @@
                                 账户管理服务 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">线上账户服务</a></li>
-                                <li><a href="#">财务查询</a></li>
-                                <li><a href="#">信用卡办卡</a></li>
+                                <li>
+                                    <router-link to="/library/账户管理服务/线上账户服务">线上账户服务</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/账户管理服务/财务查询">财务查询</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/账户管理服务/信用卡办卡">信用卡办卡</router-link>
+                                </li>
                             </ul>
                         </li>
                         <li role="presentation" class="dropdown">
@@ -113,13 +119,27 @@
                                 商户收单服务 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">小额免密</a></li>
-                                <li><a href="#">APP移动在线支付</a></li>
-                                <li><a href="#">生物识别支付</a></li>
-                                <li><a href="#">Apple Pay支付</a></li>
-                                <li><a href="#">H5移动在线支付</a></li>
-                                <li><a href="#">工银e缴费</a></li>
-                                <li><a href="#">二维码扫码支付</a></li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/小额免密">小额免密</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/APP移动在线支付">APP移动在线支付</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/生物识别支付">生物识别支付</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/ApplePay支付">Apple Pay支付</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/H5移动在线支付">H5移动在线支付</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/工银e缴费">工银e缴费</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/商户收单服务/二维码扫码支付">二维码扫码支付</router-link>
+                                </li>
                             </ul>
                         </li>
                         <li role="presentation" class="dropdown">
@@ -129,8 +149,12 @@
                                 安全认证服务 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">融安e信</a></li>
-                                <li><a href="#">在线身份认证</a></li>
+                                <li>
+                                    <router-link to="/library/安全认证服务/融安e信">融安e信</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/library/安全认证服务/在线身份认证">在线身份认证</router-link>
+                                </li>
                             </ul>
                         </li>
                         <li role="presentation" class="dropdown">
@@ -140,7 +164,9 @@
                                 商户运营服务 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">工银e生活</a></li>
+                                <li>
+                                    <router-link to="/library/商户运营服务/工银e生活">工银e生活</router-link>
+                                </li>
                             </ul>
                         </li>
                         <li role="presentation" class="dropdown">
@@ -150,7 +176,9 @@
                                 资金结算服务 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">境内汇款</a></li>
+                                <li>
+                                    <router-link to="/library/资金结算服务/境内汇款">境内汇款</router-link>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -159,11 +187,23 @@
         </nav>
         <div class="container-fluid">
             <ol class="breadcrumb">
-                <li><a href="#">商户收单服务</a></li>
-                <li><a href="#">二维码扫码支付</a></li>
-                <li class="active">二维码生成</li>
+                <li>应用列表</li>
+                <li>{{ $route.params.part }}</li>
+                <li class="active">{{ $route.params.section }}</li>
             </ol>
-            <qr-pay-panel></qr-pay-panel>
+            <div v-if="$route.params.part === '商户收单服务' && $route.params.section === '二维码扫码支付'">
+                <qr-pay-panel></qr-pay-panel>
+            </div>
+            <div v-else-if="$route.params.part != ' ' && $route.params.section != null">
+                <div class="page-header">
+                    <h3>暂未开放</h3>
+                </div>
+            </div>
+            <div v-else>
+                <div class="page-header">
+                    <h3>选择一个应用</h3>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -265,6 +305,7 @@
         </div>
     </div>
 </template>
+
 
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
