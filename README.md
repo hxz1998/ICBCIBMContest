@@ -1,4 +1,4 @@
-#ICBC-IBM-Contest
+# ICBC-IBM-Contest
 
 ![Build:pass](https://img.shields.io/badge/build-pass-green.svg)
 ![Version:1.0](https://img.shields.io/badge/Version-1.0-brightgreen.svg)
@@ -12,7 +12,7 @@
 ![JQuery:3.3.1](https://img.shields.io/badge/JQuery-3.3.1-brightgreen.svg)
 
 ## 技术栈
-该项目为2018 ICBC - IBM全国大学生金融科技创新大赛使用，具体技术细节及描述如下：
+**该项目为2018 ICBC - IBM全国大学生金融科技创新大赛使用，具体技术细节及描述如下：**
 1. 使用Java语言，SpringMVC框架作为后端语言及工具，接入ICBC开放API服务提供前端支持。
 2. 使用Bootstrap框架构建前端页面样式。
 3. 使用Vue、Vue-resource、Vue-router框架与后端服务交互。
@@ -32,7 +32,26 @@ mvn clean package
 - [x] 生成二维码
 
 ## 效果演示
-[戳这里](http://118.31.62.78:8080/icbc/)
+[戳这里👈](http://118.31.62.78:8080/icbc/)
+
+### 二维码扫码演示：
+![](https://github.com/MonkeyAndDog/ICBCIBMContest/blob/master/screenshots/qr.png)
+
+## 部分页面截屏
+### 主页
+![](https://github.com/MonkeyAndDog/ICBCIBMContest/blob/master/screenshots/home.jpg)
+
+### 应用列表
+![](https://github.com/MonkeyAndDog/ICBCIBMContest/blob/master/screenshots/applicationlist.jpg)
+
+### 二维码生成输入组框
+![](https://github.com/MonkeyAndDog/ICBCIBMContest/blob/master/screenshots/qr-pay-input.jpg)
+
+### 二维码生成结果
+![](https://github.com/MonkeyAndDog/ICBCIBMContest/blob/master/screenshots/qr-pay.jpg)
+
+### 关于页
+![](https://github.com/MonkeyAndDog/ICBCIBMContest/blob/master/screenshots/about.jpg)
 
 ## 项目目录说明
 ```text
