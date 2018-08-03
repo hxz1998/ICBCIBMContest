@@ -124,6 +124,27 @@ var router = new VueRouter({
 
 var vm = new Vue({
     el: '#app',
-    router: router
+    data: {
+        isAccessibilityModel: false,
+        accessibilityModel: '无障碍模式',
+        contentFontSize: 1
+    },
+    router: router,
+    methods: {
+        fullScreen: function () {
+            screenfull.toggle();
+            this.isAccessibilityModel = !this.isAccessibilityModel;
+            this.changeAccessibilityModel();
+        },
+        changeAccessibilityModel: function () {
+            if (this.isAccessibilityModel) {
+                this.accessibilityModel = '一般模式';
+                this.contentFontSize = 3;
+            } else {
+                this.accessibilityModel = '无障碍模式';
+                this.contentFontSize = 1;
+            }
+        }
+    }
 });
 

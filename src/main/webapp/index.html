@@ -36,7 +36,7 @@
     </div>
 </template>
 
-<div id="app">
+<div id="app" v-bind:style="{ fontSize:contentFontSize + 'em' }">
     <!--通用导航-->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -60,6 +60,9 @@
                     </li>
                     <li>
                         <router-link to="/about">关于</router-link>
+                    </li>
+                    <li>
+                        <a href="#" v-on:click="fullScreen">{{ accessibilityModel }}</a>
                     </li>
                 </ul>
             </div>
@@ -187,9 +190,14 @@
         </nav>
         <div class="container-fluid">
             <ol class="breadcrumb">
-                <li>应用列表</li>
-                <li>{{ $route.params.part }}</li>
-                <li class="active">{{ $route.params.section }}</li>
+                <li>
+                    <router-link to="/library">应用列表</router-link>
+                </li>
+                <li>
+                    <router-link to="$route.params.part">{{ $route.params.part }}</router-link>
+                </li>
+                <li v-if="$route.params.section != '$route.params.part'" class="active">{{ $route.params.section }}</li>
+                <li v-else></li>
             </ol>
             <div v-if="$route.params.part === '商户收单服务' && $route.params.section === '二维码扫码支付'">
                 <qr-pay-panel></qr-pay-panel>
@@ -279,7 +287,7 @@
 <template id="about">
     <div class="container">
         <div class="page-header">
-            <h1 class="text-center">金融服务应用</h1>
+            <h1 class="text-center">无障碍金融服务应用</h1>
         </div>
         <dl class="dl-horizontal">
             <dt>API服务提供：</dt>
@@ -288,10 +296,28 @@
             <dd>iFinance.org</dd>
             <dt>开发背景：</dt>
             <dd>
-                传统银行业正面临着巨大的转型挑战，移动互联网、大数据、云计算、人工智能、区块链等新一代信息技术加速改造金融业态，在这种形势下，拥抱金融科技，创新金融产品和服务模式、改进运营流程、极致用户体验成为构建未来智慧银行的重要任务。开放API不仅成为了银行业面对互联网＋跨界创新趋势下非常有利的工具，而且在贯穿银行IT
-                整体应用构架建设过程中，对应用整合能力的提升、金融服务的再创新、用户体验的全方位提高都有着立竿见影的作用。
+                传统银行业正面临着巨大的转型挑战，移动互联网、大数据、云计算、人工智能、区块链等新一代信息技术加速改造金融
+                业态，在这种形势下，拥抱金融科技，创新金融产品和服务模式、改进运营流程、极致用户体验成为构建未来智慧银行的
+                重要任务。开放API不仅成为了银行业面对互联网＋跨界创新趋势下非常有利的工具，而且在贯穿银行IT整体应用构架建
+                设过程中，对应用整合能力的提升、金融服务的再创新、用户体验的全方位提高都有着立竿见影的作用。
             </dd>
         </dl>
+        <br>
+        <div class="page-header">
+            <h2 class="text-center">项目简介</h2>
+        </div>
+        <div class="container">
+            <blockquote>
+                <p>该项目旨在使用一种简单的方式为残障人士快速建立金融通道，使他们有机会使用更加方便快捷的服务。</p>
+                <footer>—iFinance团队</footer>
+            </blockquote>
+            <br>
+            <p style="font-size:16px">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;互联网在发展给金融领域带来了巨大的变革，服务迭代日新月异 ，
+                给生活带来极大的便捷但是对残障人士的关怀并没有明显改善，他们作为社会一大群体需要被关怀，需要拥有使用相同的服
+                务的权利，而该项目的诞生，就是想提供一种简单快捷的方式，为残障人士提供简单业务场景的服务支持。
+            </p>
+        </div>
     </div>
 </template>
 
@@ -380,6 +406,7 @@
 <script src="js/vue.js"></script>
 <script src="js/vue-router.js"></script>
 <script src="js/vue-resource.js"></script>
+<script src="js/screenfull.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
