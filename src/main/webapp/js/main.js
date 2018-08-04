@@ -45,7 +45,7 @@ Vue.component('qr-pay-panel', {
         },
         post: function () {
             Pace.restart();
-            this.$http.post('http://localhost:8080/demo/qr/getQrCode', {
+            this.$http.post('http://localhost:8080/icbc/qr/getQrCode', {
                 'merId': this.merId,
                 'storeCode': this.storeCode,
                 'outTradeNo': this.outTradeNo,
