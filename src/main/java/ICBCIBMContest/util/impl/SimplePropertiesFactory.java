@@ -9,6 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * 直接从 IO 流读取配置文件属性
+ *
+ * @author Mr.Hu
+ */
 @Component("propertiesFactory")
 @Scope
 public class SimplePropertiesFactory implements PropertiesFactory {

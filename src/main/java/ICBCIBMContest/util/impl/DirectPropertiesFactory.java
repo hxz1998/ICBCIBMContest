@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
+/**
+ * 使用 SpringBoot 方式进行属性读取
+ *
+ * @author Mr.Hu
+ */
 public class DirectPropertiesFactory implements PropertiesFactory {
 
     @Value("${APP_ID}")

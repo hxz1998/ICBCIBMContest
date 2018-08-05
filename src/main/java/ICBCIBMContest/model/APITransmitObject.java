@@ -1,5 +1,15 @@
 package ICBCIBMContest.model;
 
+/**
+ * API 传输对象一般实现类
+ *
+ * 封装了 状态码    status
+ *       数据域    data
+ *       消息域    msg
+ *
+ * @param <T> 数据填充域泛型接口
+ * @author Mr.Hu
+ */
 public class APITransmitObject<T> {
 
     protected String status;

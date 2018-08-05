@@ -6,6 +6,12 @@ import ICBCIBMContest.services.exception.ParamEmptyException;
 
 import java.lang.reflect.Field;
 
+/**
+ * 简单的对象参数传输对象封装类
+ * 封装了要求为 true 的参数
+ *
+ * @author Mr.hu
+ */
 public class SimpleQrRequestParam implements QrRequestParam, Verifiable {
 
     //商户线下档案编号
