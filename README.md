@@ -61,6 +61,7 @@ mvn clean package
 ```text
 .
 ├── lib                                 //icbc开放API所需SDK
+├── doc                                 //JavaDoc生成的API文档
 ├── screenshots                         //项目demo截图
 ├── src                                 //项目源代码
 │   └── main
