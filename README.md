@@ -75,7 +75,7 @@ mvn clean package
 │       ├── resources                   //配置文件目录
 │       │   └── application.properties  //应用配置文件
 │       ├── test                        //测试类目录
-│       └── webapp                      //web应用相关页面及配置目录
+│       ├── webapp                      //web应用相关页面及配置目录
 │       ├── css                         //前端样式表目录
 │       ├── fonts                       //字体目录
 │       ├── img                         //图片目录
