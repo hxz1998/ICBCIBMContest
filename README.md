@@ -15,6 +15,9 @@
 **该项目旨在使用一种简单的方式为残障人士快速建立金融通道，使他们有机会使用更加方便快捷的服务。** 但同时该应用也适用于普通大众。
 > [特别感谢 ICBC 为该项目提供的API开放接口服务](https://open.icbc.com.cn/icbc/apip/service.html)。
 
+## 前端项目
+> [传送门](https://github.com/MonkeyAndDog/ICBC-IBM-Contest-Web)
+
 ## 技术栈
 **该项目为2018 ICBC - IBM全国大学生金融科技创新大赛使用，具体技术细节及描述如下：**
 1. 使用Java语言，SpringMVC框架作为后端语言及工具，接入ICBC开放API服务提供前端支持。
@@ -22,6 +25,8 @@
 3. 使用Vue、Vue-resource、Vue-router框架与后端服务交互。
 4. 使用maven对整个项目进行管理和构建。
 5. 使用tomcat为服务器容器对应用进行部署。
+6. 使用npm管理前端依赖
+7. 使用webpack打包前端项目
 
 ## 项目源码获取、打包及运行发布
 ```
