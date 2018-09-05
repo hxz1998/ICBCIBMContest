@@ -10,10 +10,11 @@
 ![Vue-router3.0.1](https://img.shields.io/badge/Vue--router-3.0.1-brightgreen.svg)
 ![Bootstrap:3.3.7](https://img.shields.io/badge/Bootstrap-3.3.7-brightgreen.svg)
 ![JQuery:3.3.1](https://img.shields.io/badge/JQuery-3.3.1-brightgreen.svg)
+![Vuex:3.0.1](https://img.shields.io/badge/Vuex-3.0.1-brightgreen.svg)
 
 ## 项目简介
 **该项目旨在使用一种简单的方式为残障人士快速建立金融通道，使他们有机会使用更加方便快捷的服务。** 但同时该应用也适用于普通大众。
-> [特别感谢 ICBC 为该项目提供的API开放接口服务](https://open.icbc.com.cn/icbc/apip/service.html)。
+> [特别感谢 ICBC及IBM 为该项目提供的API开放接口服务和支持](https://open.icbc.com.cn/icbc/apip/service.html)。
 
 ## 前端项目
 > [传送门](https://github.com/MonkeyAndDog/ICBC-IBM-Contest-Web)
