@@ -66,7 +66,7 @@ public class QrRCodeGenerateController {
      * @param param 必要的参数
      * @return 序列化过后的API传输对象
      */
-    @CrossOrigin("http://localhost:63342")
+    @CrossOrigin("http://localhost:8081")
     @RequestMapping(value = "/getQrCode", produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getQrCode(@ModelAttribute SimpleQrRequestParam param) {

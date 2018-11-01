@@ -96,7 +96,7 @@ public class QrGeneratorService {
                 APIGW_PUBLIC_KEY);
         QrcodeGenerateRequestV2 request = new QrcodeGenerateRequestV2();
         //填充服务器地址
-        request.setServiceUrl(SERVER_URL);
+        request.setServiceUrl(SERVER_URL + "/qrcode/V2/generate");
         QrcodeGenerateRequestV2.QrcodeGenerateRequestV2Biz bizContent =
                 new QrcodeGenerateRequestV2.QrcodeGenerateRequestV2Biz();
 
