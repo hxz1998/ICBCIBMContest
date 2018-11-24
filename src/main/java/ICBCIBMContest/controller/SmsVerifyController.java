@@ -15,6 +15,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.UUID;
 
+/**
+ * 短信验证码验证控制器，不需要底层服务组件支持
+ * 完整访问路径为：<pre>http://server_ip:port/ifinance/verify</pre>
+ * <p>
+ * 需要的请求参数：
+ * <pre>{
+ * @code
+ * smsSendNo, 短信验证编号
+ * corpSerNoOriginal, 原始交易单号
+ * }
+ * </pre>
+ * <p>
+ * 返回数据格式：
+ * <pre>
+ *     json对象:{
+ *     data: "", 正常返回的结果: 工行联名卡号; 非正确结果: 带回交易码; 异常结果: 带回空值
+ *     msg: "", 正常返回结果: ICBC原始业务成功处理的返回信息; 非正确结果: 带回ICBC原始异常信息提示; 异常结果: 一些异常提示?
+ *     status: ""  正常返回的结果: 0;  非正确结果: 带回ICBC开放接口原始错误码; 异常结果: 带回 -1;
+ * }
+ * </pre>
+ */
 @Controller
 @RequestMapping("/verify")
 public class SmsVerifyController {
@@ -46,19 +67,19 @@ public class SmsVerifyController {
         SERVER_URL = propertiesFactory.getPropertyValue("SERVER_URL");
     }
 
-    public PropertiesFactory getPropertiesFactory() {
-        return propertiesFactory;
-    }
-
-    @Resource
-    public void setPropertiesFactory(PropertiesFactory propertiesFactory) {
-        this.propertiesFactory = propertiesFactory;
-    }
-
+    /**
+     * 负责接收短信验证信息，并且提供验证码校验结果
+     * 特殊的跨域列表提供调试方便
+     * 默认的字符集为utf-8， ContentType为application/json
+     *
+     * @param smsSendNo         要校验的短信编号
+     * @param corpSerNoOriginal 原始的交易编号
+     * @return 校验的结果，以json对象格式返回
+     */
     @CrossOrigin("http://localhost:8081")
     @RequestMapping(value = "/smsVerify", produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String verify(String smsSendNo, String corpSerNoOriginal) throws IcbcApiException {
+    public String verify(String smsSendNo, String corpSerNoOriginal) {
         if (APP_ID == null) {
             init();
         }
@@ -77,23 +98,35 @@ public class SmsVerifyController {
         bizContent.setSmsSendNo(smsSendNo);
         bizContent.setSmsSCode("955888");
         request.setBizContent(bizContent);
-        SettlementAccountSCodeVerifyResponseV1 response = client.execute(request, "msgId");
-        if (response.isSuccess()) {
-            // 业务成功处理
-            System.out.println("success" + response.getReturnMsg());
-            System.out.println(response.getSuccessFlag());
-            System.out.println(response.getMediumId());
-            apiTransmitObject.setStatus("" + response.getReturnCode());
-            apiTransmitObject.setData(response.getMediumId());
-            apiTransmitObject.setMsg(response.getReturnMsg());
-        } else {
-            System.out.println("error" + response.getReturnMsg());
-            System.out.println(response.getReturnCode());
-            apiTransmitObject.setMsg(response.getReturnMsg());
-            apiTransmitObject.setData(response.getCorpSerno());
-            apiTransmitObject.setStatus("" + response.getReturnCode());
+        SettlementAccountSCodeVerifyResponseV1 response = null;
+        try {
+            response = client.execute(request, "msgId");
+            if (response.isSuccess()) {
+                // 业务成功处理
+                apiTransmitObject.setStatus("" + response.getReturnCode());
+                apiTransmitObject.setData(response.getMediumId());
+                apiTransmitObject.setMsg(response.getReturnMsg());
+            } else if (response == null) {
+                apiTransmitObject.setMsg(response.getReturnMsg());
+                apiTransmitObject.setData(response.getCorpSerno());
+                apiTransmitObject.setStatus("" + response.getReturnCode());
+            }
+        } catch (IcbcApiException e) {
+            e.printStackTrace();
+            apiTransmitObject.setStatus(-1 + "");
+            apiTransmitObject.setMsg("系统异常");
+            apiTransmitObject.setData(null);
         }
         return JSON.toJSONString(apiTransmitObject);
+    }
+
+    public PropertiesFactory getPropertiesFactory() {
+        return propertiesFactory;
+    }
+
+    @Resource
+    public void setPropertiesFactory(PropertiesFactory propertiesFactory) {
+        this.propertiesFactory = propertiesFactory;
     }
 
 }

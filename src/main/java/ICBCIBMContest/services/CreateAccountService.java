@@ -10,6 +10,19 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+/**
+ * 该服务为开户所用服务类
+ * 以下通用参数从IO流读取，默认配置文件为项目路径下的 <strong>application.properties</strong>
+ * 1. APP_ID
+ * 2. MY_PRIVATE_KEY
+ * 3. APIGW_PUBLIC_KEY
+ * 4. SERVER_URL
+ * <p>
+ * 所需读取属性的工厂从Spring注入
+ *
+ * @see PropertiesFactory,ICBCIBMContest.util.impl.SimplePropertiesFactory
+ * @author XiaozhongHu
+ */
 @Component
 public class CreateAccountService {
 
@@ -51,16 +64,17 @@ public class CreateAccountService {
 
     /**
      * 结算账户开户服务
+     *
      * @param param 封装从前端传来的数据
-     * @throws IcbcApiException API异常抛出
      */
-    public SettlementAccountOpenResponseV1 create(CreateAccountParam param) throws IcbcApiException {//填充配置文件内容
+    public SettlementAccountOpenResponseV1 create(CreateAccountParam param) {
         if (APP_ID == null) {
             init();
         }
         DefaultIcbcClient client = new DefaultIcbcClient(APP_ID, MY_PRIVATE_KEY, APIGW_PUBLIC_KEY);
         SettlementAccountOpenRequestV1 request = new SettlementAccountOpenRequestV1();
-        SettlementAccountOpenRequestV1.SettlementAccountOpenRequestV1Biz bizContent = new SettlementAccountOpenRequestV1.SettlementAccountOpenRequestV1Biz();
+        SettlementAccountOpenRequestV1.SettlementAccountOpenRequestV1Biz bizContent =
+                new SettlementAccountOpenRequestV1.SettlementAccountOpenRequestV1Biz();
         request.setServiceUrl(SERVER_URL + "settlement/account/V1/open");
         bizContent.setAddress("");
         bizContent.setBindMedium(param.getBindMedium());
@@ -88,14 +102,16 @@ public class CreateAccountService {
         bizContent.setSecretKey("ASDQWEQDZCSDFAWWQDA");
         bizContent.setBindMediumHash("SDFDFHTEWTGDFWADADAFSDGSESEFD");
         request.setBizContent(bizContent);
-        SettlementAccountOpenResponseV1 response = client.execute(request, "msgId");
-        if (response.isSuccess()) {
-            System.out.println(response.getSmsSendNo());
-        } else {
-            System.out.println(response.getReturnMsg());
+        SettlementAccountOpenResponseV1 response = null;
+        try {
+            response = client.execute(request, "msgId");
+        } catch (IcbcApiException e) {
+            e.printStackTrace();
         }
-        return response;
-
+        if (response.isSuccess()) {
+            return response;
+        } else {
+            return null;
+        }
     }
 }
-//955888

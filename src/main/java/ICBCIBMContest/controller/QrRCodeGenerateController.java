@@ -36,7 +36,7 @@ import javax.annotation.Resource;
  *      }
  * }</pre>
  *
- * @author Mr.Hu
+ * @author XiaozhongHu
  * @see QrGeneratorService
  * @see PropertiesFactory
  * @see APITransmitObjectFactory
