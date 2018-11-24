@@ -16,6 +16,8 @@ public class APITransmitObject<T> {
     protected T data;
     protected String msg;
 
+    public APITransmitObject(){}
+
     public APITransmitObject(String status, T data, String msg) {
         this.status = status;
         this.data = data;
