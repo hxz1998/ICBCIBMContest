@@ -62,8 +62,6 @@ public class SmsVerifyController {
         if (APP_ID == null) {
             init();
         }
-        System.out.println("origin:" + corpSerNoOriginal);
-        System.out.println("sms:" + smsSendNo);
         APITransmitObject<String> apiTransmitObject = new APITransmitObject<>();
         DefaultIcbcClient client = new DefaultIcbcClient(APP_ID, MY_PRIVATE_KEY, APIGW_PUBLIC_KEY);
         SettlementAccountSCodeVerifyRequestV1 request = new SettlementAccountSCodeVerifyRequestV1();
@@ -76,7 +74,7 @@ public class SmsVerifyController {
         bizContent.setOutServiceCode("1");
         bizContent.setTrxAccDate("2017-03-15");
         bizContent.setTrxAccTime("13:30:01");
-        bizContent.setSmsSendNo(546866 + "");
+        bizContent.setSmsSendNo(smsSendNo);
         bizContent.setSmsSCode("955888");
         request.setBizContent(bizContent);
         SettlementAccountSCodeVerifyResponseV1 response = client.execute(request, "msgId");
@@ -86,7 +84,7 @@ public class SmsVerifyController {
             System.out.println(response.getSuccessFlag());
             System.out.println(response.getMediumId());
             apiTransmitObject.setStatus("" + response.getReturnCode());
-            apiTransmitObject.setData(response.getCorpSerno());
+            apiTransmitObject.setData(response.getMediumId());
             apiTransmitObject.setMsg(response.getReturnMsg());
         } else {
             System.out.println("error" + response.getReturnMsg());
